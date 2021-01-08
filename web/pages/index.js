@@ -12,6 +12,9 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#20232a',
+    },
+    secondary: {
+      main: '#4791db'
     }
   },
 });
@@ -33,24 +36,6 @@ export default class Index extends React.Component{
   handleChange = (event, newValue) => {
     this.setState({value: newValue});
   };
-  componentDidMount(){
-    let data = {
-      query: {subreddit: "wallstreetbets", ticker: "TSLA"},
-      sort: {_id: 1},
-      limit: 1,
-      skip: 125,
-    }
-    fetch('http://spaceballcookie.hopto.org:3000/api/entry', {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then(response => response.json())
-    .then(res => console.log(res));
-
-  }
   render(){
     return(
       <ThemeProvider theme={theme}>
@@ -62,8 +47,20 @@ export default class Index extends React.Component{
             <Tab label="Crypto"/>
           </Tabs>
         </AppBar>
-        <TabPanel value={this.state.value} index={1} subreddit="CryptoCurrency" data= {this.props.data.cc} />
-        <TabPanel value={this.state.value} index={0} subreddit="wallstreetbets" data = {this.props.data.wsb}/>
+        <TabPanel
+          value={this.state.value}
+          index={1}
+          subreddits={[{subreddit: "CryptoCurrency"}]}
+          data= {this.props.data.cc}
+          threshold={0.15}
+          redirect={"https://stockcharts.com/search/?section=symbols&q=%24"}/>
+        <TabPanel
+          value={this.state.value}
+          index={0}
+          subreddits={[{subreddit: "wallstreetbets"}, {subreddit: "investing"}, {subreddit: "stocks"}]}
+          data = {this.props.data.wsb}
+          threshold={0.15}
+          redirect={"https://www.marketwatch.com/investing/stock/"}/>
       </ThemeProvider>
 
     )

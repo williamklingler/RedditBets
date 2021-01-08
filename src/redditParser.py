@@ -9,7 +9,7 @@ class CommentProcessor:
     def __init__(self, subreddit, sentimentInterval, dataSet):
         self.subreddit, self.sentimentInterval = subreddit, sentimentInterval
         self.subInstance = praw.Reddit(client_id=client_id, client_secret=client_secret, user_agent="testscript by u/spaceballcookie").subreddit(subreddit)
-        self.df = pd.DataFrame(columns=['postID', 'ticker', 'sentiment', 'magnitude','subreddit', 'permalink', 'date'])
+        self.df = pd.DataFrame(columns=['postID', 'ticker', 'sentiment', 'magnitude','subreddit', 'permalink', 'date', 'body'])
         self.sentiment = Sentiment()
         self.dataSet = dataSet
 
@@ -25,15 +25,18 @@ class CommentProcessor:
     def parseComments(self, comments):
         for comment in comments:
             #analyzeComment(comment.body)
-            self.sentiment.setWeighting(comment.score)
-            self.searchString(comment)
+            if not comment.body.isupper():
+                self.sentiment.setWeighting(comment.score)
+                self.searchString(comment)
             self.parseComments(comment.replies)
 
     def searchString(self,comment):
+        wordsUsed = []
         for word in comment.body.split():
             if len(word) >= 2 and len(word) <= 4:
                 if word.isupper():
-                    if self.queryContainsWord(word) > 0:
+                    if self.queryContainsWord(word) > 0 and not word in wordsUsed:
+                        wordsUsed.append(word)
                         self.analyzeComment(comment, word)
 
     def analyzeComment(self,comment, word):
@@ -56,7 +59,7 @@ class CommentProcessor:
             #sentiment_dict["Score"] = averageScore
             #sentiment_dict["Magnitude"] = averageMagnitude
             self.df.loc[len(self.df.index)] = [comment.id, word, averageScore, averageMagnitude,
-                                               self.subreddit,comment.permalink, comment.created_utc]
+                                               self.subreddit,comment.permalink, comment.created_utc, comment.body]
 
     def queryContainsWord(self, word):
         return len(self.dataSet.query('Symbol == @word'))

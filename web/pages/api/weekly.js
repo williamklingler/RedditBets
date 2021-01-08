@@ -1,8 +1,8 @@
-import {Entry, mongoose} from "../../../lib/entries"
+import {Weekly, mongoose} from "../../lib/entries"
 
 export default async (req, res) => {
   const data = req.body;
-  Entry.find({$and: [{$or: data.query}], sentiment: {$ne: 0}})
+  Weekly.find({$and: [{$or: data.query}], sentiment: {$ne: 0}})
     .sort(data.sort)
     .limit(data.limit)
     .skip(data.skip)

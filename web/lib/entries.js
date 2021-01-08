@@ -26,4 +26,21 @@ try {
   Entry = mongoose.model("Entry", entrySchema);
 }
 
-export {Entry, mongoose}
+const weeklySchema = {
+  ticker: String,
+  occurences: Number,
+  sentiment: Number,
+  magnitude: Number,
+  subreddit: String,
+  createdAt: Date
+};
+
+let Weekly;
+try {
+  // Trying to get the existing model to avoid OverwriteModelError
+  Weekly = mongoose.model("Weekly");
+} catch {
+  Entry = mongoose.model("Weekly", weeklySchema);
+}
+
+export {Entry, Weekly, mongoose}

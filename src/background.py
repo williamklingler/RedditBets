@@ -2,6 +2,7 @@ from redditParser import CommentProcessor
 from DBManager import dbManager
 import pandas as pd
 import matplotlib
+import time
 """
 cryptoParser = CommentProcessor('CryptoCurrency', 0, pd.read_csv("/home/sbc/RedditBets/data/cryptoSymbols.csv"))
 cryptoParser.parseSubmissions('new',['limit=30'])
@@ -53,8 +54,8 @@ print("skrt skrt")
 print("time for the weekly")
 manager.printweeklyTickerstCollection({})
 """
-
-subredditList = ['wallstreetbets', 'investing', 'stocks', 'CryptoCurrency']
+#subredditList = ['wallstreetbets','stocks', 'CryptoCurrency']
+subredditList = ['stocks', 'CryptoCurrency']
 
 for subreddit in subredditList:
     parser = None
@@ -62,10 +63,12 @@ for subreddit in subredditList:
         parser = CommentProcessor('CryptoCurrency', 0, pd.read_csv("/home/sbc/RedditBets/data/cryptoSymbols.csv"))
     else:
         parser = CommentProcessor(subreddit,0, pd.read_csv("/home/sbc/RedditBets/data/nasdaq_screener.csv"));
-    parser.parseSubmissions('top', ['limit=20', 'time_filter="day"'])
+    parser.parseSubmissions('top', ['limit=5', 'time_filter="day"'])
     parserData = parser.getData()
     dbmanager = dbManager(parserData)
     dbmanager.populateCollections()
+    time.sleep(61)
+    print("done" + subreddit)
 
 #wsbParser = CommentProcessor('wallstreetbets',0, pd.read_csv("/home/sbc/RedditBets/data/nasdaq_screener.csv"));
 #wsbParser.parseSubmissions('top', ['limit=20', 'time_filter="day"'])

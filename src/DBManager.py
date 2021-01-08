@@ -17,10 +17,11 @@ class dbManager:
 
     def populateCollections(self):
         self.fillCollection(self.entriesCollection, self.data)
+
         today = datetime.datetime.today()
         todayEnd = datetime.datetime(today.year,today.month,today.day, 23, 59, 59, 999999)
-
         todayBeginning = datetime.datetime(today.year,today.month,today.day, 0, 0, 0, 0)
+
         timeFrame = [todayBeginning, todayEnd]
         list = self.getTickerStats(self.entriesCollection, self.getUsedTickers(self.entriesCollection, timeFrame), timeFrame)
         self.fillCollection(self.dailyTickersCollection, list)
