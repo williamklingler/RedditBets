@@ -5,17 +5,42 @@ import fetchEntry from "../lib/fetchEntry"
 export default class WeeklyChart extends React.Component{
   constructor(props){
     super(props)
-    this.state ={data: 1}
+    this.state ={isLoaded: false}
+  }
+  componentDidMount(){
+    let from_date = new Date();
+    from_date.setDate(from_date.getDate()-1); // a day ago
+    from_date = from_date.toISOString();
+    let to_date = new Date().toISOString();
     let data = {
-      query: this.props.subreddits,
+      query: {$and: [{$or: this.props.subreddits},
+                    {sentiment: {$ne: 0}},
+                    //{ticker: "TSLA"},
+                    {createdAt: {"$gt": from_date, "$lt": to_date}}
+                  ]},
       sort: {occurences: -1},
-      limit: 5,
+      limit: 10,
       skip: 0
     }
-    fetchEntry('weekly',data).then( (data) => {this.state={data: data};});
+    fetchEntry('weekly',data).then( (data) => {this.setState({data: data, isLoaded: true});});
   }
   render(){
-    const data = {
+    if(this.state.isLoaded){
+      var data = {
+          labels: [],
+          datasets: [
+              {
+                  name: "mentions", chartType: "bar",
+                  values: []
+              }
+          ]
+      }
+      this.state.data.map((entry) => {
+        data.labels.push(entry.ticker);
+        data.datasets[0].values.push(entry.occurences);
+      })
+
+    const data1 = {
         labels: ["12am-3am", "3am-6pm", "6am-9am", "9am-12am",
             "12pm-3pm", "3pm-6pm", "6pm-9pm", "9am-12am"
         ],
@@ -31,14 +56,15 @@ export default class WeeklyChart extends React.Component{
         ]
     }
 
-    const chart = new Chart("#chart", {  // or a DOM element,
+    const chart = new Chart('#'+ this.props.chartContainer, {  // or a DOM element,
                                                 // new Chart() in case of ES6 module with above usage
-        title: "My Awesome Chart",
+        title: "Mentions this week",
         data: data,
-        type: 'axis-mixed', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
+        type: 'bar', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
         height: 250,
         colors: ['#7cd6fd', '#743ee2']
     })
-    return(<> {this.state.data}</>)
+  }
+    return(<></>)
   }
 }

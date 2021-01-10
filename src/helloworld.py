@@ -1,15 +1,13 @@
 import praw
 import quandl
+import datetime
 from google.cloud import language_v1
 from pymongo import MongoClient
 
 connection = MongoClient("mongodb://127.0.0.1:27017/RedditBets")
 db = connection.RedditBets
 
-reddit = praw.Reddit(client_id='U7vFhmfHkgSGBw',client_secret="Ci3yiYo2nyGew2LVT_o21lW1sHShYA", user_agent="testscript by u/spaceballcookie")
-print(reddit.read_only)
-
-
+"""
 # Instantiates a client
 client = language_v1.LanguageServiceClient()
 
@@ -24,13 +22,9 @@ sentiment = client.analyze_sentiment(request={'document': document}).document_se
 print("Text: {}".format(text))
 print("Sentiment: {}, {}".format(sentiment.score, sentiment.magnitude))
 
-
 #quandl.ApiConfig.api_key = "u2wYP-iZ_ryVXcNAAYRz"
 #print(quandl.get("EIA/PET_RWTC_D"));
-
-
-
-
+"""
 """ Delete duplicate entries
 cursor = list(db.entries.find())
 for i in range(len(cursor)):
@@ -40,21 +34,22 @@ for i in range(len(cursor)):
         #    db.entries.delete_one({'_id':id})
         print(i)
 """
-""" Delete all caps and add comments
 
+"""
+#reddit = praw.Reddit(client_id='U7vFhmfHkgSGBw',client_secret="Ci3yiYo2nyGew2LVT_o21lW1sHShYA", user_agent="testscript by u/spaceballcookie")
+#print(reddit.read_only)
 #wsb = reddit.subreddit("wallstreetbets");
 #ring = praw.models.Comment(reddit, url="https://www.reddit.com/r/wallstreetbets/comments/krwgw9/emergency_american_politics_containment_zone/gie5dkz/");
 #print(ring.body)
 
-cursor = db.entries.find()
+# Code for editing entries
+cursor = db.dailies.find()
 for record in cursor:
-    link = record['permalink']
-    comment = praw.models.Comment(reddit, url="https://www.reddit.com" + link)
     id = record['_id']
-    if(comment.body.isupper()):
-        db.entries.delete_one({'_id':id})
-    else:
-        db.entries.update_one({'_id':id}, { '$set': {'body':comment.body} })
+    date = record['createdAt']
+    day = str(date.day) + "-" + str(date.month) + "-" + str(date.year)
+    #print(day)
+    db.dailies.update_one({'_id':id}, { '$set': {'day':day} })
 """
 
 

@@ -54,8 +54,8 @@ print("skrt skrt")
 print("time for the weekly")
 manager.printweeklyTickerstCollection({})
 """
-#subredditList = ['wallstreetbets','stocks', 'CryptoCurrency']
-subredditList = ['stocks', 'CryptoCurrency']
+subredditList = ['wallstreetbets','stocks', 'CryptoCurrency']
+#subredditList = ['stocks', 'CryptoCurrency']
 
 for subreddit in subredditList:
     parser = None

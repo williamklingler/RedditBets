@@ -40,7 +40,24 @@ try {
   // Trying to get the existing model to avoid OverwriteModelError
   Weekly = mongoose.model("Weekly");
 } catch {
-  Entry = mongoose.model("Weekly", weeklySchema);
+  Weekly = mongoose.model("Weekly", weeklySchema);
 }
 
-export {Entry, Weekly, mongoose}
+const dailySchema = {
+  ticker: String,
+  occurences: Number,
+  sentiment: Number,
+  magnitude: Number,
+  subreddit: String,
+  createdAt: Date,
+};
+
+let Daily;
+try {
+  // Trying to get the existing model to avoid OverwriteModelError
+  Daily = mongoose.model("Daily");
+} catch {
+  Daily = mongoose.model("Daily", dailySchema);
+}
+
+export {Entry, Weekly, Daily, mongoose}

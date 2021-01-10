@@ -2,7 +2,7 @@ import {Weekly, mongoose} from "../../lib/entries"
 
 export default async (req, res) => {
   const data = req.body;
-  Weekly.find({$and: [{$or: data.query}], sentiment: {$ne: 0}})
+  Weekly.find(data.query)
     .sort(data.sort)
     .limit(data.limit)
     .skip(data.skip)

@@ -4,6 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem'
 import SymbolList from './SymbolList'
 import WeeklyChart from './WeeklyChart'
+import DailyChart from './DailyChart';
 
 export default class TabPanel extends React.Component{
   constructor(props){
@@ -18,8 +19,10 @@ export default class TabPanel extends React.Component{
     if (this.props.value == this.props.index)
     return(
       <div>
-        <div id="chart"></div>
-        {this.state.isLoaded && <WeeklyChart subreddit={this.props.subreddits}/>}
+        <div id="weeklyChart" style={{width:'70%'}}></div>
+        <div id="dailyChart" style={{width:'70%'}}></div>
+        {this.state.isLoaded && <WeeklyChart chartContainer="weeklyChart" subreddits={this.props.subreddits}/>}
+        {this.state.isLoaded && <DailyChart chartContainer="dailyChart" subreddits={this.props.subreddits}/>}
           <SymbolList threshold={this.props.threshold} redirect={this.props.redirect} subreddits={this.props.subreddits} data={this.props.data}/>
       </div>
     );

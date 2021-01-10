@@ -1,8 +1,8 @@
-import {Entry, mongoose} from "../../../lib/entries"
+import {Daily, mongoose} from "../../lib/entries"
 
 export default async (req, res) => {
   const data = req.body;
-  Entry.find(data.query)
+  Daily.find(data.query)
     .sort(data.sort)
     .limit(data.limit)
     .skip(data.skip)

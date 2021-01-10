@@ -28,7 +28,7 @@ export default class SymbolList extends React.Component{
       return;
     }
     let data = {
-      query: this.props.subreddits,
+      query: {$and: [{$or: this.props.subreddits},{sentiment: {$ne: 0}}]},
       sort: {date: -1},
       limit: 20,
       skip: this.state.data.length,
@@ -76,7 +76,7 @@ export default class SymbolList extends React.Component{
                 {this.state.data.map((entry) => (
                   <TableRow key={entry._id} style={{backgroundColor: 'rgba(71, 145, 219,' + Math.min(entry.magnitude/5,0.5) + ')'}}>
                     <TableCell component="th" scope="row" width="5%">
-                      <Link color="secondary" target="_blank" href={this.props.redirect + entry.ticker}>
+                      <Link color="secondary" target="_blank" href={this.props.redirect.replace("insert++here",entry.ticker)}>
                           {entry.ticker}
                       </Link>
                     </TableCell>

@@ -39,6 +39,10 @@ export default class Index extends React.Component{
   render(){
     return(
       <ThemeProvider theme={theme}>
+        <Head>
+          <title>Reddit Bets</title>
+          <link rel="shortcut icon" href="/rocket.png" />
+        </Head>
         <AppBar position="static">
           <Tabs
             value={this.state.value}
@@ -53,7 +57,7 @@ export default class Index extends React.Component{
           subreddits={[{subreddit: "CryptoCurrency"}]}
           data= {this.props.data.cc}
           threshold={0.15}
-          redirect={"https://stockcharts.com/search/?section=symbols&q=%24"}/>
+          redirect={"https://pro.coinbase.com/trade/insert++here-USD"}/>
         <TabPanel
           value={this.state.value}
           index={0}
