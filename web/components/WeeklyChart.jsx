@@ -8,21 +8,19 @@ export default class WeeklyChart extends React.Component{
     this.state ={isLoaded: false}
   }
   componentDidMount(){
-    let from_date = new Date();
-    from_date.setDate(from_date.getDate()-1); // a day ago
-    from_date = from_date.toISOString();
-    let to_date = new Date().toISOString();
+    let today = new Date();
+    today = (today).toLocaleDateString().replaceAll('/','-');
     let data = {
-      query: {$and: [{$or: this.props.subreddits},
+      query: {$and: [{$or: [this.props.subreddits[0]]},
                     {sentiment: {$ne: 0}},
                     //{ticker: "TSLA"},
-                    {createdAt: {"$gt": from_date, "$lt": to_date}}
+                    {day: today}
                   ]},
       sort: {occurences: -1},
       limit: 10,
       skip: 0
     }
-    fetchEntry('weekly',data).then( (data) => {this.setState({data: data, isLoaded: true});});
+    fetchEntry('weekly',data).then( (data) => {this.setState({data: data.reverse(), isLoaded: true});});
   }
   render(){
     if(this.state.isLoaded){
@@ -40,25 +38,9 @@ export default class WeeklyChart extends React.Component{
         data.datasets[0].values.push(entry.occurences);
       })
 
-    const data1 = {
-        labels: ["12am-3am", "3am-6pm", "6am-9am", "9am-12am",
-            "12pm-3pm", "3pm-6pm", "6pm-9pm", "9am-12am"
-        ],
-        datasets: [
-            {
-                name: "Some Data", chartType: "bar",
-                values: [25, 40, 30, 35, 8, 52, 17, -4]
-            },
-            {
-                name: "Another Set", chartType: "line",
-                values: [25, 50, -10, 15, 18, 32, 27, 14]
-            }
-        ]
-    }
-
     const chart = new Chart('#'+ this.props.chartContainer, {  // or a DOM element,
                                                 // new Chart() in case of ES6 module with above usage
-        title: "Mentions this week",
+        title: "Mentions This Week",
         data: data,
         type: 'bar', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
         height: 250,

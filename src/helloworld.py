@@ -43,13 +43,13 @@ for i in range(len(cursor)):
 #print(ring.body)
 
 # Code for editing entries
-cursor = db.dailies.find()
+cursor = db.entries.find()
 for record in cursor:
     id = record['_id']
     date = record['createdAt']
-    day = str(date.day) + "-" + str(date.month) + "-" + str(date.year)
+    day = str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + "-" + str(date.year)
     #print(day)
-    db.dailies.update_one({'_id':id}, { '$set': {'day':day} })
+    db.entries.update_one({'_id':id}, { '$set': {'day':day} })
 """
 
 

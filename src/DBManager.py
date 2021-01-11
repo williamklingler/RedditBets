@@ -34,7 +34,10 @@ class dbManager:
 
     def fillCollection(self, dbcollection, listOfDict):
         for record in listOfDict:
-            record['createdAt'] = datetime.datetime.today()
+            date = datetime.datetime.today()
+            record['createdAt'] = date
+            day = str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + "-" + str(date.year)
+            record['day'] = day
             dbcollection.insert_one(record)
 
     # Return a set containing every ticker from the last timeframe of entries
