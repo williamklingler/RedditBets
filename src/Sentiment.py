@@ -22,9 +22,7 @@ class Sentiment:
             sentiment_dict["Magnitude"] = (sentiment.magnitude * 1.5) + self.weighting
         else:
             sentiment_dict["Magnitude"] = sentiment.magnitude + self.weighting
-        #print("Sentiment: {}, {}".format(sentiment.score, sentiment.magnitude))
         return sentiment_dict
 
     def setWeighting(self, score):
-        #some algorithm to decide weighting based off comment score
         self.weighting = score / 100

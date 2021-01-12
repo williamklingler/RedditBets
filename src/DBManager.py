@@ -43,7 +43,6 @@ class dbManager:
     # Return a set containing every ticker from the last timeframe of entries
     def getUsedTickers(self, dbcollection, timeFrame):
         tickerSet = set()
-        #cursor = dbcollection.find({'subreddit':self.subreddit})
         cursor = dbcollection.find({'subreddit':self.subreddit, "createdAt": {
                                        "$gt": timeFrame[0],
                                        "$lte": timeFrame[1] }})
@@ -58,7 +57,6 @@ class dbManager:
             averageScore = 0
             averageMagnitude = 0
             occurances = 0
-            #cursor = dbcollection.find({"ticker":ticker, 'subreddit':self.subreddit})
             cursor = dbcollection.find({'ticker': ticker,'subreddit':self.subreddit, "createdAt": {
                                            "$gt": timeFrame[0],
                                            "$lte": timeFrame[1] }})
@@ -94,30 +92,3 @@ class dbManager:
         cursor = self.weeklyTickersCollection.find(dict)
         for record in cursor:
             print(record)
-
-"""
-*Run this in main:
-
-wsbParser = CommentProcessor('wallstreetbets',0, pd.read_csv("nasdaq_screener.csv"));
-wsbParser.parseSubmissions('top', ['limit=1', 'time_filter="day"'])
-data = wsbParser.getData()
-#print(data)
-#print(data.to_dict('records'))
-#subreddit = data.to_dict('records')[0]['subreddit']
-
-manager = dbManager(data)
-manager.emptyEntriesCollection()          except for the delete lines!
-manager.emptydailyTickersCollection()     not this
-manager.emptyweeklyTickersCollection()    or this
-manager.populateCollections()
-
-*Run this to print and exchange {} with whatever you wanna quary
-
-manager.printEntriesCollection({})
-print("skrt skrt")
-print("line break uwu")
-manager.printdailyTickerstCollection({})
-print("skrt skrt")
-print("time for the weekly")
-manager.printweeklyTickerstCollection({})
-"""
