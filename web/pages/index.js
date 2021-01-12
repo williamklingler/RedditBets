@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from '../components/TabPanel'
-import Footer from '../components/Footer'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -99,7 +98,6 @@ export default class Index extends React.Component{
           data = {this.props.data.wsb}
           threshold={0.15}
           redirect={"https://www.marketwatch.com/investing/stock/"}/>
-        <Footer/>
       </ThemeProvider>
 
     )

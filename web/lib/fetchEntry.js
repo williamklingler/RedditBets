@@ -1,5 +1,7 @@
 export default async function fetchEntry(endpoint, data){
-  var res = await fetch('http://spaceballcookie.hopto.org:3000/api/' + endpoint, {
+  const url = 'http://redditbets.zapto.org/api/';
+  //const url = 'http://spaceballcookie.hopto.org/api/';
+  var res = await fetch(url + endpoint, {
     method: 'post',
     headers: {
       'Accept': 'application/json',

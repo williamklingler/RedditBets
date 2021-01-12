@@ -6,6 +6,7 @@ import SymbolList from './SymbolList'
 import WeeklyChart from './WeeklyChart'
 import DailyChart from './DailyChart';
 import SentimentChart from './SentimentChart'
+import Footer from '../components/Footer'
 
 export default class TabPanel extends React.Component{
   constructor(props){
@@ -29,6 +30,7 @@ export default class TabPanel extends React.Component{
           <canvas id="sentimentChart" width="400" height="300"></canvas>
         </div>
         <SentimentChart threshold={this.props.threshold} chartContainer="sentimentChart" subreddits={this.props.subreddits}/>
+        <Footer />
       </div>
     );
     else return(<></>)

@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 export default function Footer() {
     const classes = useStyles();
     return (
-        <footer className="footer">
-            <Container maxWidth="sm" className={classes.container}>
+        <footer>
+            <Container maxWidth="sm">
                 <Divider variant="inset" />
                 <Typography variant="h5" color="textSecondary" align="center" className={classes.margin}>
                     {'Made with '}<img src="/mongodb.png" height="24px" style={{ verticalAlign: "sub" }} />{',  '}<img src="/nextjs.png" height="24px" style={{ verticalAlign: "sub" }} />{',  '}<img src="/react.png" height="24px" style={{ verticalAlign: "sub" }} />{',  '}<img src="/nodejs.png" height="32px" style={{ verticalAlign: "sub" }} />, && ❤️
