@@ -1,4 +1,4 @@
-# RedditBets ✨
+# RedditBets 🚀✨
 ### *python, pandas, react, mongoDB, next.js*
 #### *with the help of material.ui, chart.js, mongoose, frappe charts, Reddit API, Google Natural Langauge Processing API  and more.*
 The ultimate sentiment analysis tool for stocks and cryptocurrencies on popular Reddit subreddits like **r/wallstreetbet, r/stocks, r/investing** and **r/CryptoCurrency**
