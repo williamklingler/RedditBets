@@ -31,13 +31,13 @@ export default class SymbolList extends React.Component{
       query: {$and: [{$or: this.props.subreddits},{sentiment: {$ne: 0}}]},
       sort: {date: -1},
       limit: 20,
-      skip: this.state.data.length,
+      skip: this.state.data.length+20,
     }
     fetchEntry('entry',data).then( (data) => {this.setState({data: this.state.data.concat(data)});});
   }
   render(){
     return (
-      <Paper elevation={3} style={{maxWidth:'60%', marginLeft: 50, marginTop: 50}}>
+      <Paper elevation={3} style={{width:this.props.width, marginLeft: 50, marginTop: 50}}>
         <Typography
           variant="h5"
           style={{backgroundColor: '#20232a', width: '100%', lineHeight: '7vh', color: 'white',
@@ -63,46 +63,46 @@ export default class SymbolList extends React.Component{
               <TableHead style={{backgroundColor:'white'}}>
                 <TableRow>
                   <TableCell>
-                    Symbol
+                  <Typography> Symbol </Typography>
                   </TableCell>
-                  <TableCell align="right">Sentiment</TableCell>
-                  <TableCell align="center"> Magnitude </TableCell>
-                  <TableCell align="center"> Comment </TableCell>
-                  <TableCell align="center"> Link </TableCell>
-                  <TableCell align="right"> Date</TableCell>
+                  <TableCell variant ='head' align="right"> <Typography> Sentiment </Typography> </TableCell>
+                  <TableCell align="center"> <Typography> Magnitude </Typography> </TableCell>
+                  <TableCell align="center"> <Typography> Comment </Typography> </TableCell>
+                  <TableCell align="center"> <Typography> Link </Typography> </TableCell>
+                  <TableCell align="right"> <Typography> Date </Typography></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {this.state.data.map((entry) => (
-                  <TableRow key={entry._id} style={{backgroundColor: 'rgba(71, 145, 219,' + Math.min(entry.magnitude/5,0.5) + ')'}}>
+                  <TableRow key={entry._id+this.props.subreddits[0].subreddit} style={{backgroundColor: 'rgba(71, 145, 219,' + Math.min(entry.magnitude/5,0.5) + ')'}}>
                     <TableCell component="th" scope="row" width="5%">
                       <Link color="secondary" target="_blank" href={this.props.redirect.replace("insert++here",entry.ticker)}>
-                          {entry.ticker}
+                          <Typography fontWeight="fontWeightBold">{entry.ticker}</Typography>
                       </Link>
                     </TableCell>
                     {entry.sentiment > this.props.threshold &&
                       <TableCell
                         width="7%"
-                        style={{backgroundColor: '#4caf50'}}>
-                        {(entry.sentiment+'').substring(0,7)}
+                        style={{backgroundColor: 'rgba(3, 222, 46, 0.7)'}}>
+                          <Typography fontWeight="fontWeightBold">{(entry.sentiment+'').substring(0,7)}</Typography>
                       </TableCell>
                     }
                     {entry.sentiment < -this.props.threshold &&
                       <TableCell
                         width="7%"
-                        style={{backgroundColor: '#f44336'}}>
-                        {(entry.sentiment+'').substring(0,7)}
+                        style={{backgroundColor: 'rgba(240, 52, 52, 0.7)'}}>
+                          <Typography fontWeight="fontWeightBold">{(entry.sentiment+'').substring(0,7)}</Typography>
                       </TableCell>
                     }
                     {Math.abs(entry.sentiment) < this.props.threshold &&
                       <TableCell
                         width="7%"
-                        style={{backgroundColor: '#D3D3D3'}}>
-                        {(entry.sentiment+'').substring(0,7)}
+                        style={{backgroundColor: 'rgba(184, 184, 184, 0.7)'}}>
+                        <Typography fontWeight="fontWeightBold">{(entry.sentiment+'').substring(0,7)}</Typography>
                       </TableCell>
                     }
                     <TableCell align="right" width="7%">
-                      {(entry.magnitude+'').substring(0,7)}
+                      <Typography fontWeight="fontWeightBold">{(entry.magnitude+'').substring(0,7)}</Typography>
                     </TableCell>
                     <TableCell style={{wordWrap: 'break-word', maxWidth:10, fontSize: 12}}>
                         {entry.body}

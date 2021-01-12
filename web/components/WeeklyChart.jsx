@@ -1,6 +1,7 @@
 import React from 'react'
 import { Chart } from '../node_modules/frappe-charts/dist/frappe-charts.min.esm';
 import fetchEntry from "../lib/fetchEntry"
+//import moment from 'moment'
 
 export default class WeeklyChart extends React.Component{
   constructor(props){
@@ -8,8 +9,9 @@ export default class WeeklyChart extends React.Component{
     this.state ={isLoaded: false}
   }
   componentDidMount(){
+    //console.log(moment().format())
     let today = new Date();
-    today = (today).toLocaleDateString().replaceAll('/','-');
+    today = (today).toLocaleDateString('en-GB').replaceAll('/','-');
     let data = {
       query: {$and: [{$or: [this.props.subreddits[0]]},
                     {sentiment: {$ne: 0}},

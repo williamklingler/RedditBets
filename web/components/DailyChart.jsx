@@ -9,7 +9,7 @@ export default class dailyChart extends React.Component{
   }
   componentDidMount(){
     let today = new Date();
-    today = (today).toLocaleDateString().replaceAll('/','-');
+    today = (today).toLocaleDateString('en-GB').replaceAll('/','-');
     let data = {
       query: {$and: [{$or: [this.props.subreddits[0]]},
       {sentiment: {$ne: 0}},
@@ -34,10 +34,10 @@ initialLoad = (symbols) => {
     tickers.push({ticker: symbol})
   })
   let today = new Date();
-  today = (today).toLocaleDateString().replaceAll('/','-');
+  today = (today).toLocaleDateString('en-GB').replaceAll('/','-');
   let sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate()-7);
-  sevenDaysAgo = sevenDaysAgo.toLocaleDateString().replaceAll('/','-');
+  sevenDaysAgo = sevenDaysAgo.toLocaleDateString('en-GB').replaceAll('/','-');
   let data = {
     query: {$and: [{$or: [this.props.subreddits[0]]},
     {$or: tickers},
