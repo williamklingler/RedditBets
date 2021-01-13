@@ -80,7 +80,7 @@ export default class Index extends React.Component{
               open={Boolean(this.state.anchorEl)}
               onClose={this.handleClose}
             >
-              <Typography width={'30%'}> Data is updated once daily. Uses data from r/wallstreetbets, r/investing, r/stocks, and r/CryptoCurrency. Sentiment indicates the overall emotion of a comment. Negative sentiment values indicate negative emotional text, whereas positive values indicate positive emotional text. Sentiment values that are greater than 0.15 or less than -0.15 are considered good indicators of emotion in a comment. Magnitude values indicate the how popular the comment was on Reddit. The Recent Mentions table has infinite scroll. </Typography>
+              <Typography width={'30%'}> This project uses machine learning to track the sentiment surrounding popular stocks and cyrptocurrencies on Reddit, letting you know whether you should buy or sell. Data is updated once daily. Uses data from r/wallstreetbets, r/investing, r/stocks, and r/CryptoCurrency. Sentiment indicates the overall emotion of a comment. Negative sentiment values indicate negative emotional text, whereas positive values indicate positive emotional text. Sentiment values that are greater than 0.15 or less than -0.15 are considered good indicators of emotion in a comment. Magnitude values indicate the how popular the comment was on Reddit. The Recent Mentions table has infinite scroll. </Typography>
             </Menu>
           </Toolbar>
         </AppBar>
