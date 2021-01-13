@@ -32,8 +32,33 @@ export async function getServerSideProps(context) {
   wsb = await wsb.json()
   var cc = await fetch('http://localhost:3000/api/entry/CryptoCurrency');
   cc = await cc.json()
+  let data = {
+    query: {$or: [{subreddit: "wallstreetbets"}, {subreddit: "investing"}, {subreddit: "stocks"}]}
+  }
+  var wsbCount = await fetch('http://redditbets.zapto.org:3000/api/count', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  wsbCount = await wsbCount.json();
+  data = {
+    query: {$or: [{subreddit: "CryptoCurrency"}]}
+  }
+  var ccCount = await fetch('http://redditbets.zapto.org:3000/api/count', {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  ccCount = await ccCount.json();
+
   // Pass data to the page via props
-  return { props: { data: {wsb: wsb, cc: cc} } };
+  return { props: { data: {wsb: wsb, wsbCount: wsbCount, cc: cc, ccCount: ccCount}}};
 }
 
 export default class Index extends React.Component{
@@ -97,6 +122,7 @@ export default class Index extends React.Component{
           index={1}
           subreddits={[{subreddit: "CryptoCurrency"}]}
           data= {this.props.data.cc}
+          count ={this.props.data.ccCount}
           threshold={0.15}
           redirect={"https://pro.coinbase.com/trade/insert++here-USD"}/>
         <TabPanel
@@ -104,6 +130,7 @@ export default class Index extends React.Component{
           index={0}
           subreddits={[{subreddit: "wallstreetbets"}, {subreddit: "investing"}, {subreddit: "stocks"}]}
           data = {this.props.data.wsb}
+          count ={this.props.data.wsbCount}
           threshold={0.15}
           redirect={"https://www.marketwatch.com/investing/stock/"}/>
       </ThemeProvider>

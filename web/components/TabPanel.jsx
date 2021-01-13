@@ -28,7 +28,7 @@ export default class TabPanel extends React.Component{
       });
       return(
         <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-          <span style={{marginTop:30, display: 'flex', flexDirection: 'row'}}> {this.props.subreddits.length == 1 ? <LooksOneIcon style={{verticalAlign: 'bottom'}}/> : <Looks3Icon  style={{verticalAlign: 'bottom'}}/>} <Typography style={{marginLeft: 5}}> Data from {subredditsDisplay}</Typography> </span>
+          <span style={{marginTop:30, display: 'flex', flexDirection: 'row'}}> {this.props.subreddits.length == 1 ? <LooksOneIcon style={{verticalAlign: 'bottom'}}/> : <Looks3Icon  style={{verticalAlign: 'bottom'}}/>} <Typography style={{marginLeft: 5}}> Tracking {this.props.count} comments from {subredditsDisplay}</Typography> </span>
           <div id="weeklyChart" style={{width:'70%', margin: 20}}></div>
           <SymbolList width='70%' threshold={this.props.threshold} redirect={this.props.redirect} subreddits={this.props.subreddits} data={this.props.data}/>
           <div id="dailyChart" style={{width:'70%', margin: 20}}></div>
