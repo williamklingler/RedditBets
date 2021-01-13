@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 
 const theme = createMuiTheme({
@@ -67,6 +68,11 @@ export default class Index extends React.Component{
             <IconButton onClick={this.handleClick} color="inherit">
               <InfoOutlinedIcon />
             </IconButton>
+            <a href="github.com/williamklingler/redditbets" target="_blank">
+              <IconButton color="inherit">
+                <GitHubIcon />
+              </IconButton>
+            </a>
             <Menu
               PaperProps={{
                 style: {
